@@ -1,9 +1,10 @@
 import os
 import autogen
 
-from uniswap import answer_uniswap_question
-from utils import parse_token_usage
 import time
+
+from Promt_prototype.uniswap import answer_uniswap_question
+
 
 def run_flow(prompt: str) -> str:
     from main import OPENAI_API_KEY
@@ -40,7 +41,7 @@ def run_flow(prompt: str) -> str:
         max_consecutive_auto_reply=3, llm_config=llm_copywriter,
         system_message=f"Copywriter. Ты создаёшь рекламу для какого либо продукта",
     )
-    marketer = autogen.UserProxyAgent(name="Marketer",
+    marketer = autogen.AssistantAgent(name="Marketer",
                                       max_consecutive_auto_reply=3,
                                       llm_config=llm_marketer,
                                       system_message="Marketer. Ты анализируешь созданную рекламу Копирайтером и даёшь рекомендацию согласно full_documents")

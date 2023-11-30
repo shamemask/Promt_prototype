@@ -6,25 +6,22 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores.chroma import Chroma
 from langchain_core.documents import Document
 
-from question_model import load_pdf_to_list, chunk_split, vectorize, convert_to_chains
+from Promt_prototype.question_model import load_pdf_to_list, chunk_split, vectorize, convert_to_chains
 
-
+path_to_pdf = os.path.join("..","pdf","marketer.pdf")
 class TestUniswap(unittest.TestCase):
 
     def test_load_pdf_to_list(self):
         # Test case 1: Test with a valid PDF file
-        path = os.path.join("..","marketer.pdf")
-        result = load_pdf_to_list(path)
+        result = load_pdf_to_list(path_to_pdf)
         self.assertIsInstance(result, list)
 
         # Test case 2: Test with str in list
-        path = os.path.join("..","marketer.pdf")
-        result = load_pdf_to_list(path)
+        result = load_pdf_to_list(path_to_pdf)
         self.assertIsInstance(result[-1], Document)
 
         # Test case 3: Test with count element in list more 0
-        path = os.path.join("..","marketer.pdf")
-        result = load_pdf_to_list(path)
+        result = load_pdf_to_list(path_to_pdf)
         self.assertGreater(len(result), 0)
 
     def test_chunk_split(self):
@@ -34,13 +31,13 @@ class TestUniswap(unittest.TestCase):
         self.assertEqual(result, [])
 
         # Test case 2: Test type single document
-        docs = load_pdf_to_list(os.path.join("..","marketer.pdf"))
+        docs = load_pdf_to_list(path_to_pdf)
         result = chunk_split(docs)
         self.assertIsInstance(result[-1], Document)
 
     def test_vectorize(self):
         # Test case 1: Test with non-empty list
-        docs = load_pdf_to_list(os.path.join("..", "marketer.pdf"))
+        docs = load_pdf_to_list(path_to_pdf)
         chunked = chunk_split(docs)
         result = vectorize(chunked)
         self.assertIsNotNone(result)
@@ -50,7 +47,7 @@ class TestUniswap(unittest.TestCase):
 
     def test_convert_to_chains(self):
         # Test case 1: Test with non-empty list
-        docs = load_pdf_to_list(os.path.join("..", "marketer.pdf"))
+        docs = load_pdf_to_list(path_to_pdf)
         chunked = chunk_split(docs)
         result = vectorize(chunked)
         self.assertIsNotNone(result)
@@ -60,7 +57,7 @@ class TestUniswap(unittest.TestCase):
 
     def test_convert_to_chains(self):
         # Test case 1: Test with type returned by convert_to_chains
-        docs = load_pdf_to_list(os.path.join("..","marketer.pdf"))
+        docs = load_pdf_to_list(path_to_pdf)
         docs = chunk_split(docs)
         vector_store = vectorize(docs)
         qa = convert_to_chains(vector_store)

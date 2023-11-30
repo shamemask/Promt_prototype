@@ -35,10 +35,12 @@ cd Promt_prototype
 pip install -e .
 ```
 
+
+
 Запустить gradio.
 
 ```bash
-gradio main.py
+python main.py
 ```
 
 Открыть http://127.0.0.1:7861 в вашем браузере.
